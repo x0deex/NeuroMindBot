@@ -74,7 +74,13 @@ async def gpt_start_answer(callback: CallbackQuery, state: FSMContext, ):
 
 @user.message(Chating.text)
 async def gpt_answer(message: Message, state: FSMContext):
+    await state.set_state(Chating.wait)
     data = await state.get_data()
     model = data.get("model")
-    gpt_otvet = await gpt_text(message.text, model)
-    await message.answer(gpt_otvet)
+    response = await gpt_text(message.text, model)
+    await message.answer(response)
+    await state.clear()
+
+@user.message(Chating.wait)
+async def wait_wait(message: Message):
+    await message.answer("Ваше сообщение генерируется, подождите")

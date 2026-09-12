@@ -1,10 +1,15 @@
+import httpx
 from openai import AsyncOpenAI
-from config import AITOKEN, BASE_URL
+from config import AITOKEN, BASE_URL, PROXY
+
 
 client = AsyncOpenAI(
-    # This is the default and can be omitted
     api_key= AITOKEN,
-    base_url= BASE_URL
+    base_url= BASE_URL,
+    http_client=httpx.AsyncOpenAI(
+        proxie=PROXY,
+        transport=httpx.HTTPTransport(
+        local_address="0.0.0.0"))
 )
 
 
