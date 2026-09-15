@@ -6,8 +6,8 @@ from config import AITOKEN, BASE_URL, PROXY
 client = AsyncOpenAI(
     api_key= AITOKEN,
     base_url= BASE_URL,
-    http_client=httpx.AsyncOpenAI(
-        proxie=PROXY,
+    http_client=httpx.AsyncClient(
+        proxy=PROXY,
         transport=httpx.HTTPTransport(
         local_address="0.0.0.0"))
 )
